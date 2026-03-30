@@ -1,0 +1,33 @@
+class Solution:
+    def islandsAndTreasure(self, grid: List[List[int]]) -> None:
+        dq = collections.deque()
+        seen = set()
+        for r in range(len(grid)):
+            for c in range(len(grid[0])):
+                if grid[r][c] == 0:
+                    dq.append((r, c))
+                    seen.add((r, c))
+
+        dist = 0
+        while dq:
+
+            length = len(dq)
+            dist += 1
+            for _ in range(length):
+                r, c = dq.popleft()
+
+                for nr, nc in [(1, 0), (-1, 0), (0, 1), (0, -1)]:
+                    nr = r + nr
+                    nc = c + nc
+
+                    if (nr not in range(len(grid)) or nc not in range(len(grid[0])) or
+                        grid[nr][nc] == -1 or (nr, nc) in seen):
+                        continue
+                    grid[nr][nc] = dist
+                    dq.append((nr, nc))
+                    seen.add((nr, nc))
+        
+                    
+
+
+        

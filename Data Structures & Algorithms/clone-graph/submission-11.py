@@ -1,0 +1,31 @@
+"""
+# Definition for a Node.
+class Node:
+    def __init__(self, val = 0, neighbors = None):
+        self.val = val
+        self.neighbors = neighbors if neighbors is not None else []
+"""
+
+class Solution:
+    def cloneGraph(self, node: Optional['Node']) -> Optional['Node']:
+
+        if not node:
+            return None
+        mappings = {}
+        seen = set()
+        
+        def dfs(curr):
+            mappings[curr] = Node(curr.val)
+            seen.add(curr)
+            for nei in curr.neighbors:
+                if nei not in seen:
+                    dfs(nei)
+
+        dfs(node)
+
+        for oldNode, newNode in mappings.items():
+            for nei in oldNode.neighbors:
+                newNode.neighbors.append(mappings[nei])
+        return mappings[node]
+
+        
