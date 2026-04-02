@@ -8,22 +8,20 @@ class Node:
 
 class Solution:
     def cloneGraph(self, node: Optional['Node']) -> Optional['Node']:
-        
         if not node:
             return None
         mappings = {}
 
         def dfs(curr):
+
             mappings[curr] = Node(curr.val)
 
             for nei in curr.neighbors:
                 if nei not in mappings:
                     dfs(nei)
-        
-        dfs(node)
 
+        dfs(node)
         for oldNode, newNode in mappings.items():
             for nei in oldNode.neighbors:
                 newNode.neighbors.append(mappings[nei])
         return mappings[node]
-        
