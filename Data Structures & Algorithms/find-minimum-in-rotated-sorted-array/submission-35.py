@@ -1,0 +1,15 @@
+class Solution:
+    def findMin(self, nums: List[int]) -> int:
+        
+        left, right = 0, len(nums) - 1
+        res = float('inf')
+        while left <= right:
+            mid = (left + right) // 2
+
+            res = min(nums[mid], res)
+            if nums[mid] > nums[right]: # mid - right  unsorted. pivot resides within this range
+                res = min(nums[mid], res)
+                left = mid + 1
+            else:
+                right = mid - 1
+        return res
