@@ -11,7 +11,7 @@ class Solution:
         if fresh == 0:
             return 0
         time = 0
-        while dq:
+        while dq and fresh > 0:
             length = len(dq)
             time += 1
             for _ in range(length):
@@ -28,5 +28,5 @@ class Solution:
                     grid[nr][nc] = 2
             
         
-        return time - 1 if fresh == 0 else -1
+        return time if fresh == 0 else -1
                     
