@@ -1,25 +1,32 @@
 class Solution:
     def validTree(self, n: int, edges: List[List[int]]) -> bool:
         
-        # undirected graph, should check prev
+        # no cycle, one component
         adjList = collections.defaultdict(list)
         for n1, n2 in edges:
             adjList[n1].append(n2)
             adjList[n2].append(n1)
+        
 
-        seen = set()
+        seen = set() # detect loops
+
         def dfs(node, prev):
 
             if node in seen:
-                return False # a loop detected
+                return False
+            
             seen.add(node)
 
             for nei in adjList[node]:
                 if nei != prev:
                     if dfs(nei, node) == False:
                         return False
-
             return True
 
+        res = dfs(0, -1)
 
-        return dfs(0, - 1) and len(seen) == n
+        if len(seen) == n:
+            return res
+        
+        else:
+            return False
