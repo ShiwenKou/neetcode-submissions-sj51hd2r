@@ -5,24 +5,18 @@ class Solution:
             adjList[n1].append((t, n2))
 
         minHeap = [(0, k)]
-
-
         seen = set()
-        t = 0
+        total = 0
         while minHeap:
 
-            node_t, node = heapq.heappop(minHeap)
-
-            if node in seen:
+            t, curr = heapq.heappop(minHeap)
+            if curr in seen:
                 continue
-            
-            seen.add(node)
-            t = max(t, node_t)
+            total = max(total, t)
+            seen.add(curr)
 
-            for nei_t, nei in adjList[node]:
-                if nei not in seen:
-                    heapq.heappush(minHeap, (nei_t + node_t, nei))
-        if len(seen) == n:
-            return t
-        else:
-            return -1
+            for nei_time, nei in adjList[curr]:
+                if nei not in seen: #(optimize)
+                    heapq.heappush(minHeap, (t + nei_time, nei))
+        return total if len(seen) == n else -1
+        
