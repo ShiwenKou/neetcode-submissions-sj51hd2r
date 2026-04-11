@@ -1,0 +1,25 @@
+class Solution:
+    def countSubstrings(self, s: str) -> int:
+        
+
+        memo = {}
+        def dfs(i, j):
+
+            if i >= j:
+                return True
+            if s[i] != s[j]:
+                return False
+            if (i, j) in memo:
+                return memo[(i, j)]
+
+            ans = dfs(i + 1, j - 1)
+            memo[(i, j)] = ans
+            return ans
+
+        cnt  = 0
+        for i in range(len(s)):
+            for j in range(i, len(s)):
+
+                if dfs(i, j):
+                    cnt += 1
+        return cnt
