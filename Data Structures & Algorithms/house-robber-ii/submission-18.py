@@ -1,22 +1,24 @@
 class Solution:
     def rob(self, nums: List[int]) -> int:
-        
+        from functools import cache
         if len(nums) == 1:
             return nums[0]
-
-
+        
         def helper(lst):
-            memo = {}
+            @cache
             def dfs(i):
                 if i >= len(lst):
                     return 0
-                if i in memo:
-                    return memo[i]
 
-                res = max(dfs(i + 2) + lst[i], dfs(i + 1))
-                memo[i] = res
+                
+                res = max(lst[i] + dfs(i + 2), dfs(i + 1))
+
                 return res
             
             return dfs(0)
 
-        return max(helper(nums[:-1]), helper(nums[1:]))
+        
+        return max(helper(nums[1:]), helper(nums[:-1]))
+
+
+        
