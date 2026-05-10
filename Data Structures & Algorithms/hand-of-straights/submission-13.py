@@ -1,0 +1,24 @@
+class Solution:
+    def isNStraightHand(self, hand: List[int], groupSize: int) -> bool:
+        
+        counter = collections.Counter(hand)
+        minHeap = list(counter.keys())
+        heapq.heapify(minHeap)
+        while minHeap:
+
+            first = minHeap[0]
+
+            for i in range(first, first + groupSize):
+                if counter[i] <= 0:
+                    return False # not consecutive anymore return False
+                
+                else:
+                    counter[i] -= 1
+
+                
+                if counter[i] == 0:
+                    if i != minHeap[0]:
+                        return False # a hole exist return False
+                    heapq.heappop(minHeap)
+
+        return True
